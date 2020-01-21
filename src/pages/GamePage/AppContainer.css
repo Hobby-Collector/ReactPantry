@@ -1,0 +1,16 @@
+.AppContainer-link-margin {
+  margin-bottom: 10px;
+}
+
+.AppContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.AppContainer-controls {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
