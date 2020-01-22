@@ -9,14 +9,14 @@ module.exports = {
 
 async function login(req, res) {
   try {
-    const user = await User.findOne({email: req.body.email});
-    if (!user) return res.status(401).json({err: 'bad credentials'});
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(401).json({ err: 'bad credentials' });
     user.comparePassword(req.body.pw, (err, isMatch) => {
       if (isMatch) {
         const token = createJWT(user);
-        res.json({token});
+        res.json({ token });
       } else {
-        return res.status(401).json({err: 'bad credentials'});
+        return res.status(401).json({ err: 'bad credentials' });
       }
     });
   } catch (err) {
@@ -25,24 +25,32 @@ async function login(req, res) {
 }
 
 async function signup(req, res) {
+  console.log("SECRET ", SECRET)
   const user = new User(req.body);
   try {
     await user.save();
+    console.log('1');
     const token = createJWT(user);
-    res.json({token});
+    console.log('2');
+    res.json({ token });
   } catch (err) {
+    console.log(user);
     // Probably a duplicate email
     res.status(400).json(err);
   }
 }
 
 
-/*--- helper functions ---*/
+  /*--- helper functions ---*/
 
-function createJWT(user) {
-  return jwt.sign(
-    {user},
-    SECRET,
-    {expiresIn: '24h'}
-  );
-}
+  function createJWT(user) {
+    try {
+      return jwt.sign(
+        { user },
+        SECRET,
+        { expiresIn: '24h' }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }

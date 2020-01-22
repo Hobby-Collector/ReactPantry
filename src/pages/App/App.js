@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import userService from '../../utils/userService';
-import AppContainer from '../../components/AppContainer/AppContainer';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import SignupPage from '../SignupPage/SignupPage';
+import LoginPage from '../LoginPage/LoginPage';
+import AppContainer from '../AppContainer/AppContainer';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 class App extends Component {
@@ -25,13 +27,29 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Route exact path='/' render={() =>
-          <AppContainer
-            user={this.state.user}
-            handleLogout={this.handleLogout}
-            ingredients={this.state.ingredients}
-          />
-        } />
+        <Switch>
+          <Route exact path='/signup' render={({ history }) =>
+            <SignupPage
+              history={history}
+              handleSignupOrLogin={this.handleSignupOrLogin}
+            />
+          } />
+          <Route exact path='/login' render={({ history }) =>
+            <LoginPage
+              history={history}
+              handleSignupOrLogin={this.handleSignupOrLogin}
+            />
+          } />
+          <Route exact path='/' render={() =>
+          //userService.getUser() ?
+            <AppContainer
+              user={this.state.user}
+              handleLogout={this.handleLogout}
+              ingredients={this.state.ingredients}
+            />
+            
+          } />
+        </Switch>
       </div>
     )
   }
