@@ -25,12 +25,12 @@ async function login(req, res) {
 }
 
 async function signup(req, res) {
-  console.log("SECRET ", SECRET)
+  console.log("SECRET ", SECRET);
   const user = new User(req.body);
   try {
     await user.save();
     console.log('1');
-    const token = createJWT(user);
+    const token = createJWT(user); //the error is in this function
     console.log('2');
     res.json({ token });
   } catch (err) {
@@ -47,7 +47,7 @@ async function signup(req, res) {
     try {
       return jwt.sign(
         { user },
-        SECRET,
+        SECRET,//secret is undefined
         { expiresIn: '24h' }
       );
     } catch (err) {
