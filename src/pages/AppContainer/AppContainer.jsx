@@ -1,15 +1,12 @@
 import React from 'react';
 import IngredientContainer from '../../components/IngredientContainer/IngredientContainer';
-import NavBar from '../../components/NavBar/NavBar';
 import './AppContainer.css';
 
 const AppContainer = (props) => {
   return (
     <div className="AppContainer">
-      <NavBar
-        user={props.user}
-        handleLogout={props.handleLogout}
-      />
+      <h2>this is the Appcontainer</h2>
+      
       <IngredientContainer
         ingredients= {props.ingredients}
       />

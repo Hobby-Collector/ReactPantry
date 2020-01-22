@@ -5,6 +5,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import AppContainer from '../AppContainer/AppContainer';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import NavBar from '../../components/NavBar/NavBar';
+import WelcomePage from '../WelcomePage/WelcomePage';
 
 class App extends Component {
   constructor() {
@@ -27,6 +29,10 @@ class App extends Component {
   render() {
     return (
       <div>
+        <NavBar
+        user={this.state.user}
+        handleLogout={this.handleLogout}
+      />
         <Switch>
           <Route exact path='/signup' render={({ history }) =>
             <SignupPage
@@ -41,13 +47,14 @@ class App extends Component {
             />
           } />
           <Route exact path='/' render={() =>
-          //userService.getUser() ?
-            <AppContainer
-              user={this.state.user}
-              handleLogout={this.handleLogout}
-              ingredients={this.state.ingredients}
-            />
-            
+            userService.getUser() ?
+              <AppContainer
+                user={this.state.user}
+                handleLogout={this.handleLogout}
+                ingredients={this.state.ingredients}
+              /> :
+              <WelcomePage />
+              
           } />
         </Switch>
       </div>
