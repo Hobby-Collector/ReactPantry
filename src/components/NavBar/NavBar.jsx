@@ -29,7 +29,7 @@ const NavBar = (props) => {
                 bgcolor="background.paper"
                 m={1}
                 p={1}
-                style={{ width: '95%', height: '5rem' }}
+                style={{ width: '98%', height: '5rem' }}
             >
                 <Link to='/login' className='NavBar-link'>LOG IN</Link>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
