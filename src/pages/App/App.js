@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import ingredientService from '../../services/Ingredients-api';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import EditIngredientPage from '../EditIngredientPage/EditIngredientPage'
 
 
 import NavBar from '../../components/NavBar/NavBar';
@@ -26,7 +27,7 @@ class App extends Component {
   handleAddIngredient = async newIngredientData => {
     newIngredientData.owner = this.state.user._id;
     const newIngredient = await ingredientService.create(newIngredientData);
-    this.setState(async (state) => await ({
+    this.setState((state) => ({
       ingredients: [...state.ingredients, newIngredient]
     }),
       // Using cb to wait for state to update before rerouting
@@ -52,7 +53,6 @@ class App extends Component {
     }), () => this.props.history.push('/'));
   }
 
-
   //login and out methods
   handleLogout = () => {
     userService.logout();
@@ -68,20 +68,17 @@ class App extends Component {
   async componentDidMount() {
     let ingreds = await ingredientService.getAll()
     let ingredients = await ingreds;
-    setTimeout(() => console.log("middle of component did mount ingredients before this.setState", ingredients), 1000)
-    this.setState({ingredients: ingredients });
-    console.log("bottom of component did mount this.state", this.state)
+    this.setState({ ingredients: ingredients });
   }
 
   render() {
-    console.log("top of render ", this.state.ingredients)
     return (
       <MuiThemeProvider>
         <div style={{ width: '98%', height: '100%' }}>
           {/* nav bar */}
           <NavBar handleAddIngredient={this.handleAddIngredient} user={this.state.user} handleLogout={this.handleLogout} />
           {/* body */}
-          <Paper elevation={3} style={{ width: '98%', height: '100%' }}>
+          <Paper elevation={3} style={{ width: '98%', height: '100%', backgroundColor: 'palegoldenrod' }}>
             <Switch>
               <Route exact path='/signup' render={({ history }) =>
                 <SignupPage
@@ -96,8 +93,9 @@ class App extends Component {
                 />
               } />
               <Route exact path='/' render={() =>
-                userService.getUser()?
+                userService.getUser() ?
                   <AppContainer
+                    history={this.props.history}
                     user={this.state.user}
                     handleLogout={this.handleLogout}
                     ingredients={this.state.ingredients}
@@ -105,6 +103,11 @@ class App extends Component {
                   /> :
                   <WelcomePage />
               } />
+              <Route exact path='/edit' render={({ location }) =>
+                <EditIngredientPage
+                  handleUpdateIngredient={this.handleUpdateIngredient}
+                  location={location}
+                />
               } />
             </Switch>
           </Paper>

@@ -23,6 +23,7 @@ class EditIngredientPage extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <>
         <h1>Edit Ingredient</h1>
@@ -60,7 +61,7 @@ class EditIngredientPage extends Component {
             className="btn btn-xs"
             disabled={this.state.invalidForm}
           >
-            SAVE PUPPY
+            Update Ingredient
           </button>&nbsp;&nbsp;
           <Link to='/'>CANCEL</Link>
         </form>

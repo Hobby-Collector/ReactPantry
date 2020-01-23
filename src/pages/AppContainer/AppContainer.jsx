@@ -5,32 +5,46 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import {Link} from 'react-router-dom';
 
 const AppContainer = (props) => {
-  let titleString  = props.ingredients.length ? "here are your ingredients!" : "looks like you don't have any ingredients yet! Add one up top!"
+  console.log(props);
+  let ingreds = props.ingredients.filter(ingredient => ingredient.owner === props.user._id);
+  let titleString = ingreds.length ? "here are your ingredients!" : "looks like you don't have any ingredients yet! Add one up top!"
+  ingreds = ingreds.sort((a,b)=>{return a.expiration-b.expiration});
   return (
     <div className="AppContainer">
       <h1>{titleString}</h1>
-      {props.ingredients.map((ingredient, idx) => (
-        <Card className='Card' key={idx} idx={idx}>
-        <CardContent>
-          <Typography variant="h5" component="h2">
-            Name: {ingredient.name}
-          </Typography>
-          <Typography variant="body2" component="p">
-            Description: {ingredient.description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small"
-            onClick={() => props.handleDeleteIngredient(ingredient._id)}
-          >
-            remove
+      {ingreds.map((ingredient, idx) => (
+        <Card className='Card' key={idx} idx={idx} >
+          <CardContent>
+            <Typography variant="h4" component="h2" className="title">
+              {ingredient.name}
+            </Typography>
+            <Typography variant="body2" component="p">
+              Description: {ingredient.description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small"
+              onClick={() => props.handleDeleteIngredient(ingredient._id)}
+            >
+              remove
           </Button>
-        </CardActions>
-      </Card>
-      ))}
-    </div>
+            <Link
+              className='btn btn-xs btn-warning'
+              to={{
+                pathname: '/edit',
+                state: {ingredient}
+              }}
+            >
+              EDIT
+        </Link>
+          </CardActions>
+        </Card>
+      ))
+      }
+    </div >
   );
 
 };
