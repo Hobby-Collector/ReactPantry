@@ -52,7 +52,6 @@ const AppContainer = (props) => {
         </CardActions>
       </Card>
     )
-
   });
 
   return (
@@ -61,7 +60,6 @@ const AppContainer = (props) => {
       {ingreds}
     </div >
   );
-
 };
 
 export default AppContainer;
