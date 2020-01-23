@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import './NavBar.css';
 import { Box } from '@material-ui/core';
+import AddIngredient from '../AddIngredient/AddIngredient';
 
 const NavBar = (props) => {
     let nav = props.user ?
@@ -17,9 +18,19 @@ const NavBar = (props) => {
                 <Link to=''
                     className='NavBar-link'
                     onClick={props.handleLogout}
-                >LOG OUT</Link>
+                >LOG OUT
+                </Link>
                 &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
         <span className='NavBar-welcome'>WELCOME, {props.user.name}</span>
+                &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                <Link exact to='/add'>New Ingredient</Link>
+
+                <Route exact path='/add' render={() =>
+                    <AddIngredient
+                        handleAddIngredient={props.handleAddIngredient}
+                        owner= {props.user._id}
+                    />
+                } />
             </Box>
         </div>
         :
