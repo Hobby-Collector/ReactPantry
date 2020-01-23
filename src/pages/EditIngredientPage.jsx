@@ -1,23 +1,17 @@
 import React, {Component} from 'react';
-import { Card } from 'material-ui';
+import {Link} from 'react-router-dom';
 
-class AddIngredient extends Component {
+class EditIngredientPage extends Component {
   state = {
-    invalidForm: true,
-    formData: {
-      name: '',
-      description: '',
-      expiration: Date.now(),
-      owner: null
-    }
+    invalidForm: false,
+    formData: this.props.location.state.ingredient
   };
 
   formRef = React.createRef();
 
   handleSubmit = e => {
     e.preventDefault();
-    this.setState(async (state) => await {...state, owner: this.props.owner});
-    this.props.handleAddIngredient(this.state.formData);
+    this.props.handleUpdateIngredient(this.state.formData);
   };
 
   handleChange = e => {
@@ -30,11 +24,11 @@ class AddIngredient extends Component {
 
   render() {
     return (
-      <Card className="card">
-        <h1>Add Ingredient</h1>
+      <>
+        <h1>Edit Ingredient</h1>
         <form ref={this.formRef} autoComplete="off" onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label>Ingredient (required)&nbsp;</label>
+            <label>Ingredient's Name (required)&nbsp;</label>
             <input
               className="form-control"
               name="name"
@@ -44,36 +38,35 @@ class AddIngredient extends Component {
             />
           </div>
           <div className="form-group">
-            <label>Description &nbsp;</label>
+            <label>Ingredient's description&nbsp;</label>
             <input
               className="form-control"
               name="description"
-              value={this.state.formData.breed}
+              value={this.state.formData.description}
               onChange={this.handleChange}
             />
           </div>
           <div className="form-group">
-            <label>Expiration Date&nbsp;</label>
+            <label>Ingredient's expiration</label>
             <input
-              type= "date"
               className="form-control"
               name="expiration"
-              value={this.state.formData.age}
+              value={this.state.formData.expiration}
               onChange={this.handleChange}
-              required
             />
           </div>
           <button
             type="submit"
-            className="btn"
+            className="btn btn-xs"
             disabled={this.state.invalidForm}
           >
-            Add Ingredient
-          </button>
+            SAVE PUPPY
+          </button>&nbsp;&nbsp;
+          <Link to='/'>CANCEL</Link>
         </form>
-      </Card>
+      </>
     );
   }
 }
 
-export default AddIngredient;
+export default EditIngredientPage;

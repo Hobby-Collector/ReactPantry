@@ -1,6 +1,5 @@
 const Ingredient = require('../models/ingredient');
 
-
 module.exports = {
     create,
     index,

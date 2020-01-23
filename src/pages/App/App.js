@@ -11,11 +11,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import NavBar from '../../components/NavBar/NavBar';
 import WelcomePage from '../WelcomePage/WelcomePage';
-import { Paper } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       user: userService.getUser(),
       ingredients: []
@@ -24,6 +24,7 @@ class App extends Component {
 
   // Api reference methods
   handleAddIngredient = async newIngredientData => {
+    newIngredientData.owner = this.state.user._id;
     const newIngredient = await ingredientService.create(newIngredientData);
     this.setState(async (state) => await ({
       ingredients: [...state.ingredients, newIngredient]
@@ -64,19 +65,22 @@ class App extends Component {
 
   /*--- Lifecycle Methods ---*/
 
-  async UNSAFE_componentWillMount() {
+  async componentDidMount() {
     let ingreds = await ingredientService.getAll()
-    this.setState( (state) => ({ ...state, ingreds }));
-    console.log(ingreds);
+    let ingredients = await ingreds;
+    setTimeout(() => console.log("middle of component did mount ingredients before this.setState", ingredients), 1000)
+    this.setState({ingredients: ingredients });
+    console.log("bottom of component did mount this.state", this.state)
   }
 
   render() {
-    console.log(this.state.ingredients)
+    console.log("top of render ", this.state.ingredients)
     return (
       <MuiThemeProvider>
         <div style={{ width: '98%', height: '100%' }}>
           {/* nav bar */}
           <NavBar handleAddIngredient={this.handleAddIngredient} user={this.state.user} handleLogout={this.handleLogout} />
+          {/* body */}
           <Paper elevation={3} style={{ width: '98%', height: '100%' }}>
             <Switch>
               <Route exact path='/signup' render={({ history }) =>
@@ -92,13 +96,15 @@ class App extends Component {
                 />
               } />
               <Route exact path='/' render={() =>
-                userService.getUser() && this.state.ingredients.length?
+                userService.getUser()?
                   <AppContainer
                     user={this.state.user}
                     handleLogout={this.handleLogout}
                     ingredients={this.state.ingredients}
+                    handleDeleteIngredient={this.handleDeleteIngredient}
                   /> :
                   <WelcomePage />
+              } />
               } />
             </Switch>
           </Paper>

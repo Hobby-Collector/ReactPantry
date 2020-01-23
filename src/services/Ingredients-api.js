@@ -7,8 +7,8 @@ export default {
     deleteOne
 
 }
-async function getAll() {
-    return await (await fetch(BASE_URL)).json();
+function getAll() {
+    return fetch(BASE_URL).then(res => res.json());
 }
 
 function create(ingredient) {
@@ -31,4 +31,3 @@ function deleteOne(id) {
         method: 'DELETE'
     }).then(res => res.json());
 }
-
