@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './NavBar.css';
-import { Box } from '@material-ui/core';
-import AddIngredient from '../AddIngredient/AddIngredient';
+import Box from '@material-ui/core/Box';
 
 const NavBar = (props) => {
     let nav = props.user ?
@@ -12,9 +11,10 @@ const NavBar = (props) => {
                 bgcolor="background.paper"
                 m={1}
                 p={1}
-                style={{ width: '100%', height: '5rem' }}
+                style={{ width: '100%', height: 'auto' }}
             >
 
+                <h1>React Pantry</h1>
                 <Link to=''
                     className='NavBar-link'
                     onClick={props.handleLogout}
@@ -24,13 +24,6 @@ const NavBar = (props) => {
         <span className='NavBar-welcome'>WELCOME, {props.user.name}</span>
                 &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                 <Link to='/add'>New Ingredient</Link>
-
-                <Route exact path='/add' render={() =>
-                    <AddIngredient
-                        handleAddIngredient={props.handleAddIngredient}
-                        owner= {props.user._id}
-                    />
-                } />
             </Box>
         </div>
         :
@@ -40,8 +33,9 @@ const NavBar = (props) => {
                 bgcolor="background.paper"
                 m={1}
                 p={1}
-                style={{ width: '98%', height: '5rem' }}
+                style={{ width: '98%', height: 'auto' }}
             >
+                <h1>React Pantry</h1>
                 <Link to='/login' className='NavBar-link'>LOG IN</Link>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
         <Link to='/signup' className='NavBar-link'>SIGN UP</Link>

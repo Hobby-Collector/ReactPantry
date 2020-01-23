@@ -50,6 +50,7 @@ class EditIngredientPage extends Component {
           <div className="form-group">
             <label>Ingredient's expiration</label>
             <input
+              type="date"
               className="form-control"
               name="expiration"
               value={this.state.formData.expiration}

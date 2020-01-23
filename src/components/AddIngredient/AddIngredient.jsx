@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Card } from 'material-ui';
+import './AddIngredient.css';
 
 class AddIngredient extends Component {
   state = {
@@ -16,12 +17,13 @@ class AddIngredient extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.setState(async (state) => await {...state, owner: this.props.owner});
+    this.setState(async (state) => await { ...state, owner: this.props.owner });
     this.props.handleAddIngredient(this.state.formData);
   };
 
   handleChange = e => {
-    const formData = {...this.state.formData, [e.target.name]: e.target.value};
+
+    const formData = { ...this.state.formData, [e.target.name]: e.target.value };
     this.setState({
       formData,
       invalidForm: !this.formRef.current.checkValidity()
@@ -29,6 +31,8 @@ class AddIngredient extends Component {
   };
 
   render() {
+
+    console.log("props ", this.props);
     return (
       <Card className="card">
         <h1>Add Ingredient</h1>
@@ -55,7 +59,7 @@ class AddIngredient extends Component {
           <div className="form-group">
             <label>Expiration Date&nbsp;</label>
             <input
-              type= "date"
+              type="date"
               className="form-control"
               name="expiration"
               value={this.state.formData.age}
@@ -71,6 +75,12 @@ class AddIngredient extends Component {
             Add Ingredient
           </button>
         </form>
+        {/* <button
+            onClick= {this.props.history.push('/')}
+            className="btn"
+          >
+            Cancel
+          </button> */}
       </Card>
     );
   }

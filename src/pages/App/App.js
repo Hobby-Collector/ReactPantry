@@ -8,6 +8,7 @@ import './App.css';
 import ingredientService from '../../services/Ingredients-api';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import EditIngredientPage from '../EditIngredientPage/EditIngredientPage'
+import AddIngredient from '../../components/AddIngredient/AddIngredient';
 
 
 import NavBar from '../../components/NavBar/NavBar';
@@ -76,7 +77,11 @@ class App extends Component {
       <MuiThemeProvider>
         <div style={{ width: '98%', height: '100%' }}>
           {/* nav bar */}
-          <NavBar handleAddIngredient={this.handleAddIngredient} user={this.state.user} handleLogout={this.handleLogout} />
+          <NavBar
+            handleAddIngredient={this.handleAddIngredient}
+            user={this.state.user}
+            handleLogout={this.handleLogout}
+          />
           {/* body */}
           <Paper elevation={3} style={{ width: '98%', height: '100%', backgroundColor: 'palegoldenrod' }}>
             <Switch>
@@ -95,7 +100,6 @@ class App extends Component {
               <Route exact path='/' render={() =>
                 userService.getUser() ?
                   <AppContainer
-                    history={this.props.history}
                     user={this.state.user}
                     handleLogout={this.handleLogout}
                     ingredients={this.state.ingredients}
@@ -107,6 +111,14 @@ class App extends Component {
                 <EditIngredientPage
                   handleUpdateIngredient={this.handleUpdateIngredient}
                   location={location}
+                />
+              } />
+              <Route exact path='/add' render={() =>
+                <AddIngredient
+                  // eslint-disable-next-line no-restricted-globals
+                  history={history}
+                  handleAddIngredient={this.handleAddIngredient}
+                  owner={this.state.user._id}
                 />
               } />
             </Switch>
