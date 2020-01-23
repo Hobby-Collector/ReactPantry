@@ -8,10 +8,7 @@ export default {
 
 }
 async function getAll() {
-    const response = await fetch(BASE_URL);
-    const ingredients = await response.json();
-    return ingredients
-
+    return await (await fetch(BASE_URL)).json();
 }
 
 function create(ingredient) {

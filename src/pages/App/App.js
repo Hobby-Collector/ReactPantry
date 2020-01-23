@@ -64,10 +64,10 @@ class App extends Component {
 
   /*--- Lifecycle Methods ---*/
 
-  componentDidMount() {
-    let ingreds = ingredientService.getAll()
+  async UNSAFE_componentWillMount() {
+    let ingreds = await ingredientService.getAll()
+    this.setState( (state) => ({ ...state, ingreds }));
     console.log(ingreds);
-    this.setState(async (state) => (await { ...state, ingreds }));
   }
 
   render() {
@@ -77,7 +77,6 @@ class App extends Component {
         <div style={{ width: '98%', height: '100%' }}>
           {/* nav bar */}
           <NavBar handleAddIngredient={this.handleAddIngredient} user={this.state.user} handleLogout={this.handleLogout} />
-
           <Paper elevation={3} style={{ width: '98%', height: '100%' }}>
             <Switch>
               <Route exact path='/signup' render={({ history }) =>
@@ -93,7 +92,7 @@ class App extends Component {
                 />
               } />
               <Route exact path='/' render={() =>
-                userService.getUser() ?
+                userService.getUser() && this.state.ingredients.length?
                   <AppContainer
                     user={this.state.user}
                     handleLogout={this.handleLogout}
