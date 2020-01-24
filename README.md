@@ -1,4 +1,4 @@
-# <b>Sudoku</b> <br>a Web Based Implementaion
+# <b>React Pantry</b> <br>
 
 ## Overview
 
